@@ -155,3 +155,56 @@ final class RemoteFeedLoaderUsingGlobalStateTests: XCTestCase {
     
 }
 
+// Now we have a class that could be a protocol
+// Doing that we can change to inherit and create a subclass to implement it with a protocol
+// Our mantra composition over inheritance
+// Why? Subclasses creates a tight coupling between the base class and the subclass and violates OPEN/CLOSED principle
+
+final class RemoteFeedLoaderUsingCompositionTests: XCTestCase {
+    
+    func test_load_requestDataFromURL() async throws {
+        let url = URL(string: "http://a-given-url.com")!
+        let client = HTTPClientSpy()
+        let sut = RemoteFeedLoaderCompositionInjection(url: url, client: client)
+        
+        sut.load()
+        
+        XCTAssertEqual(client.requestedURL, url)
+    }
+    
+    // MARK: - Helpers
+    
+    private class RemoteFeedLoaderCompositionInjection {
+        
+        private let client: HTTPClientComposition
+        private let url: URL
+        
+        init(url: URL, client: HTTPClientComposition) {
+            self.url = url
+            self.client = client
+        }
+        
+        func load() {
+            // Now lets resolve the problem about URL
+            // URL can be multiple different and it is not the responsability if the RemoteFeedLoader to know which URL have to be used
+            // For tha we need to inject the URL
+            // We can inject by
+            client.get(from: url)
+        }
+    }
+
+    protocol HTTPClientComposition {
+        func get(from url: URL)
+    }
+    
+    private class HTTPClientSpy: HTTPClientComposition {
+        
+        var requestedURL: URL?
+        
+        func get(from url: URL) {
+            requestedURL = url
+        }
+    }
+    
+}
+
