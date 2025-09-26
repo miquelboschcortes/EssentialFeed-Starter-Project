@@ -8,7 +8,18 @@
 import XCTest
 
 class RemoteFeedLoader {
+    func load() {}
+}
+
+class RemoteFeedLoaderConstructorInjection {
     
+    private let client: HTTPClient
+    
+    init(client: HTTPClient) {
+        self.client = client
+    }
+    
+    func load() {}
 }
 
 class HTTPClient {
@@ -35,8 +46,64 @@ final class RemoteFeedLoaderTests: XCTestCase {
         XCTAssertNil(client.requestedURL)
     }
     
-//    @Test func <#test function name#>() async throws {
-//        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-//    }
+    func test_load_requestDataFromURLWithConstructorCreation() async throws {
+        let client = HTTPClient()
+        let sut = RemoteFeedLoaderConstructorInjection(client: client)
+        
+        sut.load()
+        
+        XCTAssertNotNil(client.requestedURL)
+    }
 
 }
+
+// MARK: - Using Singletons
+
+final class RemoteFeedLoaderUsingSingletonTests: XCTestCase {
+    
+    func test_load_requestDataFromURL() async throws {
+        // This tests is not ideal because it relies on a shared singleton instance.
+        // Also, it can lead to issues if tests are run in parallel or if the singleton's state is not properly reset between tests.
+        // To use a singleton in the project, we need to consider why we need only onew instance of a class
+        let client = HTTPClientSingleton.shared
+        let sut = RemoteFeedLoaderSingletonInjection(client: client)
+        
+        sut.load()
+        
+        XCTAssertNotNil(client.requestedURL)
+    }
+    
+    // MARK: - Helpers
+    
+    private class RemoteFeedLoaderSingletonInjection {
+        
+        private let client: HTTPClientSingleton
+        
+        init(client: HTTPClientSingleton) {
+            self.client = client
+        }
+        
+        func load() {
+            HTTPClientSingleton.shared.requestedURL = URL(string: "http://a-url.com")
+        }
+    }
+
+    private class HTTPClientSingleton {
+        
+        static let shared = HTTPClientSingleton()
+        
+        private init() {}
+        
+        var requestedURL: URL?
+        
+    }
+    
+}
+
+// From this, we can start refactoring and get rid of the singleton.
+// To mock a Singleton we have to do the shared variable as a var, to inject the mocked instance.
+// This affect on the singleton and change it to Global variable.
+// Remember a Global Mutable Variable: every dev can change the instance.
+
+
+
