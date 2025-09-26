@@ -7,25 +7,6 @@
 
 import XCTest
 
-class RemoteFeedLoader {
-    func load() {}
-}
-
-class RemoteFeedLoaderConstructorInjection {
-    
-    private let client: HTTPClient
-    
-    init(client: HTTPClient) {
-        self.client = client
-    }
-    
-    func load() {}
-}
-
-class HTTPClient {
-    var requestedURL: URL?
-}
-
 /*
  RemoteFeedLoader is responsible for loading feed data from a remote server.
  Its main responsibilities typically include:
