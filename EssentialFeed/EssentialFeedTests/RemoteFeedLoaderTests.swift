@@ -105,5 +105,53 @@ final class RemoteFeedLoaderUsingSingletonTests: XCTestCase {
 // This affect on the singleton and change it to Global variable.
 // Remember a Global Mutable Variable: every dev can change the instance.
 
+final class RemoteFeedLoaderUsingGlobalStateTests: XCTestCase {
+    
+    func test_load_requestDataFromURL() async throws {
+        let client = HTTPClientSpy()
+        let sut = RemoteFeedLoaderGlobalStateInjection(client: client)
+        
+        sut.load()
+        
+        XCTAssertNotNil(client.requestedURL)
+    }
+    
+    // MARK: - Helpers
+    
+    private class RemoteFeedLoaderGlobalStateInjection {
+        
+        private let client: HTTPClientGlobalState
+        
+        init(client: HTTPClientGlobalState) {
+            self.client = client
+        }
+        
+        func load() {
+            client.get(from: URL(string: "http://a-url.com")!)
+//            HTTPClientGlobalState.shared.requestedURL = URL(string: "http://a-url.com")
+        }
+    }
 
+    private class HTTPClientGlobalState {
+        
+        static var shared = HTTPClientGlobalState() // change to var
+        
+        init() {}
+        
+        func get(from url: URL) { }
+        
+    }
+    
+    // As we changed as a var and created a Global Mutable Variable, now we can subclass
+    
+    private class HTTPClientSpy: HTTPClientGlobalState {
+        
+        var requestedURL: URL?
+        
+        override func get(from url: URL) {
+            requestedURL = url
+        }
+    }
+    
+}
 
