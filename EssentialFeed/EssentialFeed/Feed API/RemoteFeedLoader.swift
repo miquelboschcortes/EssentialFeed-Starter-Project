@@ -31,23 +31,10 @@ public final class RemoteFeedLoader {
             
             switch result {
             case .success(let data, let response):
-                if let items = try? FeedItemsMapper.map(data, response: response) { //JSONSerialization.jsonObject(with: data) {
-                    completion(.success(items))
-                } else {
-                    completion(.failure(.invalidData))
-                }
+                completion(RemoteFeedLoader.map(data, from: response))
             case .failure:
                 completion(.failure(.connectivity))
             }
-        }
-    }
-    
-    private func map(_ data: Data, from response: HTTPURLResponse) -> Result {
-        do {
-            let items = try FeedItemsMapper.map(data, response: response)
-            return .success(items)
-        } catch {
-            return .failure(.invalidData)
         }
     }
 }
