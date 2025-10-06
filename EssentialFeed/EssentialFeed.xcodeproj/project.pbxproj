@@ -88,9 +88,9 @@
 		080EDEF321B6DA7E00813479 /* EssentialFeed */ = {
 			isa = PBXGroup;
 			children = (
+				080EDF1021B6DFA200813479 /* Feed Feature */,
 				196B2E562E87F4DA00FBF3D1 /* Feed API */,
 				080EDEF521B6DA7E00813479 /* Info.plist */,
-				080EDF1021B6DFA200813479 /* Feed Feature */,
 			);
 			path = EssentialFeed;
 			sourceTree = "<group>";
