@@ -18,7 +18,7 @@ import EssentialFeed
  In summary, RemoteFeedLoader acts as a service for retrieving feed items from a remote source, abstracting away the networking and parsing logic from the rest of the app.
  */
 
-final class RemoteFeedLoaderTests: XCTestCase {
+final class LoadFeedFromRemoteUseCase: XCTestCase {
 
     // First lets start by the initializer
     func test_doesNotRequesDataFromURL() async throws {
