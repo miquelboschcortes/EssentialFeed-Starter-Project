@@ -60,6 +60,7 @@
 		193FC12E2EA9778800B78488 /* EssentialFeedAPIEndToEndTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EssentialFeedAPIEndToEndTests; sourceTree = "<group>"; };
 		196B2E562E87F4DA00FBF3D1 /* Feed API */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (196B2E592E87F4F100FBF3D1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Feed API"; sourceTree = "<group>"; };
 		197112232E910EA900962B99 /* Feed API */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (193FC1372EA980D100B78488 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Feed API"; sourceTree = "<group>"; };
+		19E117EE2ED7B4A00055DBD9 /* Feed Cache */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Feed Cache"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +126,7 @@
 		080EDEFE21B6DA7E00813479 /* EssentialFeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				19E117EE2ED7B4A00055DBD9 /* Feed Cache */,
 				080EDF0121B6DA7E00813479 /* Info.plist */,
 				197112232E910EA900962B99 /* Feed API */,
 			);
@@ -186,6 +188,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				197112232E910EA900962B99 /* Feed API */,
+				19E117EE2ED7B4A00055DBD9 /* Feed Cache */,
 			);
 			name = EssentialFeedTests;
 			productName = EssentialFeedTests;
