@@ -36,7 +36,7 @@ public class CodableFeedStore: FeedStore {
         }
     }
     
-    private let queue = DispatchQueue(label: "\(CodableFeedStore.self)Queue", qos: .userInitiated) // serial queue
+    private let queue = DispatchQueue(label: "\(CodableFeedStore.self)Queue", qos: .userInitiated, attributes: .concurrent) // serial queue - (when no have attribute as a concurrent
     
     private let storeURL: URL
     
@@ -44,7 +44,7 @@ public class CodableFeedStore: FeedStore {
         self.storeURL = storeURL
     }
     
-    public func retrieve(completion: @escaping FeedStore.RetrivalCompletion) {
+    public func retrieve(completion: @escaping FeedStore.RetrivalCompletion) { // No side - effect (could run concurrently)
         let storeURL = self.storeURL
         queue.async {
             guard let data = try? Data(contentsOf: storeURL) else {
@@ -61,9 +61,9 @@ public class CodableFeedStore: FeedStore {
         }
     }
     
-    public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping FeedStore.InsertionCompletion) {
+    public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping FeedStore.InsertionCompletion) { // side - effect
         let storeURL = self.storeURL
-        queue.async {
+        queue.async(flags: .barrier) { // adding barrier to make all the other func wait to finish this work
             do {
                 let encoder = JSONEncoder()
                 let cache = Cache(feed: feed.map(CodableFeedImage.init), timestamp: timestamp)
@@ -76,9 +76,9 @@ public class CodableFeedStore: FeedStore {
         }
     }
     
-    public func deleteCachedFeed(completion: @escaping FeedStore.DeletionCompletion) {
+    public func deleteCachedFeed(completion: @escaping FeedStore.DeletionCompletion) { // side - effect
         let storeURL = self.storeURL
-        queue.async {
+        queue.async(flags: .barrier) {
             guard FileManager.default.fileExists(atPath: storeURL.path()) else {
                 return completion(nil)
             }
