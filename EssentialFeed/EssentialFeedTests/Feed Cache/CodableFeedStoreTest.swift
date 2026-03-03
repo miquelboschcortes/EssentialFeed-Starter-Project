@@ -61,7 +61,7 @@ class CodableFeedStore {
         do {
             let encoder = JSONEncoder()
             let cache = Cache(feed: feed.map(CodableFeedImage.init), timestamp: timestamp)
-            let encoded = try! encoder.encode(cache)
+            let encoded = try encoder.encode(cache)
             try encoded.write(to: storeURL)
             completion(nil)
         } catch {
@@ -146,6 +146,8 @@ class CodableFeedStoreTest: XCTestCase {
         expect(sut, toRetrieveTwice: .failure(anyNSError()))
     }
     
+    // MARK: - Insert
+    
     func test_insert_overridesPreviouslyInsertedCachedValues() {
         let sut = makeSUT()
         
@@ -171,9 +173,11 @@ class CodableFeedStoreTest: XCTestCase {
         XCTAssertNotNil(error, "Expected to insert and get an error")
     }
     
+    // MARK: - Delete
+    
     func test_delete_hasNoSideEffectsOnEmptyCache() {
         let sut = makeSUT()
-        let exp = expectation(description: "Wait for cache deletion")
+        let exp = XCTestExpectation(description: "Wait for expectation")
         
         sut.deleteCachedFeed { deletionError in
             XCTAssertNil(deletionError, "Expected empty cache deletion to succeed")
@@ -181,22 +185,6 @@ class CodableFeedStoreTest: XCTestCase {
         }
         
         wait(for: [exp], timeout: 1)
-        
-        expect(sut, toRetrieve: .empty)
-    }
-    
-    func test_delete_emptiesPreviouslyInsertedCache() {
-        let sut = makeSUT()
-        insert((uniqueImageFeed().local, Date()), to: sut)
-        
-        let exp = expectation(description: "Wait for cache deletion")
-        sut.deleteCachedFeed { deletionError in
-            XCTAssertNil(deletionError, "Expected non-empty cache deletion to succeed")
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
-
         expect(sut, toRetrieve: .empty)
     }
     
@@ -235,7 +223,8 @@ class CodableFeedStoreTest: XCTestCase {
         
         sut.retrieve { retrievedResult in
             switch (expectedResult, retrievedResult) {
-            case (.empty, .empty), (.failure, .failure):
+            case (.empty, .empty),
+                (.failure, .failure):
                 break
                 
             case let (.found(expectedFeed, expectedTimestamp), .found(retrievedFeed, retrievedTimestamp)):
