@@ -10,9 +10,11 @@ import CoreData
 
 public final class CoreDataFeedStore: FeedStore {
     private let container: NSPersistentContainer
+    private let context: NSManagedObjectContext
     
     public init(bunde: Bundle = .main) throws {
         container = try NSPersistentContainer.load(modelName: "FeedStore", in: bunde)
+        context = container.newBackgroundContext()
     }
     
     public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
