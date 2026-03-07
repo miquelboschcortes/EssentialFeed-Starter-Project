@@ -58,6 +58,7 @@
 				Infraestructure/CoreData/CoreDataHelpers.swift,
 				Infraestructure/CoreData/FeedStore.xcdatamodeld,
 				Infraestructure/CoreData/ManagedCache.swift,
+				Infraestructure/CoreData/ManagedFeedImage.swift,
 				LocalFeedImage.swift,
 				LocalFeedLoader.swift,
 			);
