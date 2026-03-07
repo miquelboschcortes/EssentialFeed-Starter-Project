@@ -53,6 +53,7 @@
 			membershipExceptions = (
 				CodableFeedStore.swift,
 				CoreDataFeedStore.swift,
+				"EssentialFeed/Feed Cache/FeedStore.xcdatamodeld",
 				FeedCachePolicy.swift,
 				FeedStore.swift,
 				LocalFeedImage.swift,
