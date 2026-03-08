@@ -47,6 +47,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		19469A8F2F5DC5E200656C53 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"XCTestCase+MemoryLeakTracking.swift",
+			);
+			target = 19469A822F5DC3B000656C53 /* EssentialFeedCacheIntegrationTests */;
+		};
 		196B2E592E87F4F100FBF3D1 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -90,7 +97,7 @@
 		197112232E910EA900962B99 /* Feed API */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Feed API"; sourceTree = "<group>"; };
 		19CC55A82EEC493200C6A2CB /* Feed Cache */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (19CC55AB2EEC496500C6A2CB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Feed Cache"; sourceTree = "<group>"; };
 		19E117EE2ED7B4A00055DBD9 /* Feed Cache */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Feed Cache"; sourceTree = "<group>"; };
-		19E117F22ED7BB3B0055DBD9 /* Helpers */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (19E117F52ED7BB3B0055DBD9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Helpers; sourceTree = "<group>"; };
+		19E117F22ED7BB3B0055DBD9 /* Helpers */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (19E117F52ED7BB3B0055DBD9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 19469A8F2F5DC5E200656C53 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Helpers; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
